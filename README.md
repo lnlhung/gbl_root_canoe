@@ -60,7 +60,10 @@ flowchart LR
      4. Kiểm tra khả năng nạp `efisp` của `abl` hiện tại: nếu `abl` đang chạy chưa hỗ trợ, script hỏi xác nhận hạ cấp `abl` từ kho `ablrepo/<product>` (ưu tiên kiểm tra SHA-256 từ gói cục bộ trong module trước, nếu không khớp sẽ tải từ nhánh `main` trên GitHub).
      5. Sao lưu `boot.efi` cũ (nếu có) thành `boot_backup.efi`, chép `boot.efi` mới cùng cây thư mục menu `efisp/` vào `/mnt/vendor/persist/efisp/` và gọi `sync`.
      6. Ghi `BDS.efi` vào phân vùng `/dev/block/by-name/efisp` và gọi `sync`.
-     7. Nếu máy mới chuyển trạng thái khởi động lần đầu tiên, khởi động vào Recovery để Format Data, sau đó cài lại module và chọn `Vol-`.
+     7. Khi module cài đặt hoàn tất, bấm **Reboot**:
+        * Ở lần khởi động lại đầu tiên, máy sẽ hiện ra menu **superfastboot**: di chuyển chọn **Android** và bấm nút **Nguồn**.
+        * Màn hình sẽ báo `Booting Android` rồi tự động đẩy vào **Recovery** (do cần khởi tạo lại khóa mã hóa dữ liệu theo trạng thái mới).
+        * Thực hiện **Format Data** ngay trong Recovery rồi **Reboot** là máy sẽ khởi động thẳng vào **System** (sau khi vào hệ thống và có lại KernelSU, cài lại module một lần nữa và chọn `Vol-` để lưu công cụ dùng khi OTA).
    * **Nhánh `Vol-` (Cập nhật module / Đã cài đặt từ trước)**:
      * Giải nén bộ công cụ `bin/` và giao diện `webroot/` vào `/data/adb/modules/fake_bl_efisp` để sử dụng sau mỗi lần cập nhật OTA.
 
